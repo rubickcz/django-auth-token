@@ -17,6 +17,10 @@ If you have an authenticated user you want to attach to the current request
   * ``backend`` - Django authorization backend
   * ``allowed_cookie`` - is allowed to log via cookie
   * ``allowed_header`` - is allowed to log via HTTP header
+  * ``two_factor_login`` - login will require second factor authorization.
+  * ``expiration`` - expiration time in seconds, for null value setting ``AUTH_TOKEN_DEFAULT_TOKEN_AGE`` is used (1h by default)
+
+Instance of ``AuthorizationToken`` will be automatically added to the request (``request.token``). This token will contain value ``secret_key`` which is unhashed value of ``key`` stored in the database. The ``secret_key`` cannot be get from database.
 
 
 Log a user out
@@ -36,7 +40,7 @@ User takeover
 If you have an authenticated user you want to take session of another user
 - this is done with a ``auth_token.utils.takeover`` function.
 
-.. function:: logout(request, user)
+.. function:: takeover(request, user)
 
   * ``request`` - Django request with token and authenticated user
-  * ``user`` - takeoved user
+  * ``user`` - takeovered user
